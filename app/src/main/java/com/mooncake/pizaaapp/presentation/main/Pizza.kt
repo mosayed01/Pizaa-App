@@ -16,11 +16,17 @@ data class Pizza(
         LARGE('L')
     }
 
-    enum class PizzaIngredient(@DrawableRes val image: Int) {
-        BASIL(R.drawable.basil_group),
-        BROCCOLI(R.drawable.broccoli_group),
-        ONION(R.drawable.onion_group),
-        MUSHROOM(R.drawable.mushroom_group),
-        SAUSAGE(R.drawable.sausage_group),
+    enum class PizzaIngredient(
+        @DrawableRes val imageGroup: Int,
+        @DrawableRes val imageItem: Int,
+    ) {
+        BASIL(R.drawable.basil_group, R.drawable.basil),
+        BROCCOLI(R.drawable.broccoli_group, R.drawable.broccoli),
+        ONION(R.drawable.onion_group, R.drawable.onion),
+        MUSHROOM(R.drawable.mushroom_group, R.drawable.mushroom),
+        SAUSAGE(R.drawable.sausage_group, R.drawable.sausage),
     }
+
+    val selectedPrice
+        get() = prices[size]
 }

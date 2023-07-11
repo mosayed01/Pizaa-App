@@ -71,7 +71,7 @@ fun PizzaItem(
                 exit = fadeOut(animationSpec = spec)
             ) {
                 Image(
-                    painter = painterResource(id = ingredient.image),
+                    painter = painterResource(id = ingredient.imageGroup),
                     contentDescription = "ingredient",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
