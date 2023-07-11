@@ -22,7 +22,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
@@ -61,16 +60,14 @@ fun PizzaSizeToggle(
         Box(
             modifier = Modifier
                 .graphicsLayer {
+                    clip = true
+                    shape = CircleShape
+                    shadowElevation = 20f
+                    ambientShadowColor = Color.Black
+                    spotShadowColor = Color.Black
                     translationX = translateXFactor * (size.width + paddingHorizontalFloat)
                 }
                 .size(circleSize)
-                .clip(CircleShape)
-                .shadow(
-                    10.dp,
-                    shape = CircleShape,
-                    ambientColor = Color.Black,
-                    spotColor = Color.Black
-                )
                 .background(circleColor)
         )
         Row(
@@ -105,13 +102,14 @@ fun PizzaSizeToggle(
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true, backgroundColor = 0xFF364736)
+@Preview(showSystemUi = true, showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun Preview() {
     var size by remember { mutableStateOf(Pizza.PizzaSize.SMALL) }
     Column {
-        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = Pizza.PizzaSize.SMALL)
-        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = Pizza.PizzaSize.MEDIUM)
-        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = Pizza.PizzaSize.LARGE)
+        PizzaSizeToggle(onSelectNewSize = {  }, pizzaSize = Pizza.PizzaSize.SMALL)
+        PizzaSizeToggle(onSelectNewSize = {  }, pizzaSize = Pizza.PizzaSize.MEDIUM)
+        PizzaSizeToggle(onSelectNewSize = {  }, pizzaSize = Pizza.PizzaSize.LARGE)
+        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = size)
     }
 }
