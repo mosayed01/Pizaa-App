@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,12 +26,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mooncake.pizaaapp.presentation.main.Pizza
 import com.mooncake.pizaaapp.presentation.ui.theme.WhiteFD
 
@@ -38,9 +38,15 @@ import com.mooncake.pizaaapp.presentation.ui.theme.WhiteFD
 fun PizzaSizeToggle(
     onSelectNewSize: (Pizza.PizzaSize) -> Unit,
     pizzaSize: Pizza.PizzaSize,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    circleSize: Dp = 30.dp,
+    circleColor: Color = WhiteFD,
+    paddingHorizontal: Dp = 16.dp,
+    textStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(
+        textAlign = TextAlign.Center,
+        color = Color.Black
+    )
 ) {
-    val circleSize = 30.dp
     val translateXFactor by animateFloatAsState(
         targetValue = when (pizzaSize) {
             Pizza.PizzaSize.SMALL -> -1f
@@ -49,14 +55,13 @@ fun PizzaSizeToggle(
         },
         animationSpec = spring(Spring.DampingRatioLowBouncy, Spring.StiffnessLow)
     )
-    val paddingHorizontal = 24.dp
     val paddingHorizontalFloat = LocalDensity.current.run { paddingHorizontal.toPx() }
 
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         Box(
             modifier = Modifier
                 .graphicsLayer {
-                    translationX = translateXFactor * (size.width + paddingHorizontalFloat / 5)
+                    translationX = translateXFactor * (size.width + paddingHorizontalFloat)
                 }
                 .size(circleSize)
                 .clip(CircleShape)
@@ -66,40 +71,35 @@ fun PizzaSizeToggle(
                     ambientColor = Color.Black,
                     spotColor = Color.Black
                 )
-                .background(WhiteFD)
+                .background(circleColor)
         )
         Row(
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.spacedBy(paddingHorizontal)
         ) {
             Text(
                 text = Pizza.PizzaSize.SMALL.char.toString(),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                fontFamily = FontFamily.SansSerif,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.clip(CircleShape).clickable { onSelectNewSize(Pizza.PizzaSize.SMALL) },
-                color = Color.Black
+                style = textStyle,
+                modifier = Modifier
+                    .size(circleSize)
+                    .clip(CircleShape)
+                    .clickable { onSelectNewSize(Pizza.PizzaSize.SMALL) },
             )
             Text(
                 text = Pizza.PizzaSize.MEDIUM.char.toString(),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                fontFamily = FontFamily.SansSerif,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.clip(CircleShape).clickable { onSelectNewSize(Pizza.PizzaSize.MEDIUM) },
-                color = Color.Black
+                style = textStyle,
+                modifier = Modifier
+                    .size(circleSize)
+                    .clip(CircleShape)
+                    .clickable { onSelectNewSize(Pizza.PizzaSize.MEDIUM) },
             )
             Text(
                 text = Pizza.PizzaSize.LARGE.char.toString(),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                fontFamily = FontFamily.SansSerif,
-                textAlign = TextAlign.Center,
+                style = textStyle,
                 modifier = Modifier
+                    .size(circleSize)
                     .clip(CircleShape)
                     .clickable { onSelectNewSize(Pizza.PizzaSize.LARGE) },
-                color = Color.Black
             )
         }
     }
@@ -110,6 +110,8 @@ fun PizzaSizeToggle(
 private fun Preview() {
     var size by remember { mutableStateOf(Pizza.PizzaSize.SMALL) }
     Column {
-        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = size)
+        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = Pizza.PizzaSize.SMALL)
+        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = Pizza.PizzaSize.MEDIUM)
+        PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = Pizza.PizzaSize.LARGE)
     }
 }
