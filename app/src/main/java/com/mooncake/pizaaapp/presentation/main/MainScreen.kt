@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -70,6 +70,7 @@ fun MainScreenContent(
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Row(
             Modifier
@@ -93,11 +94,11 @@ fun MainScreenContent(
                 contentDescription = "back",
             )
         }
-        Box(modifier = Modifier.padding(top = 32.dp), contentAlignment = Alignment.Center) {
+        Box(contentAlignment = Alignment.Center) {
             Image(
                 painter = painterResource(id = R.drawable.plate),
                 contentDescription = "",
-                modifier = Modifier.padding(horizontal = 60.dp)
+                modifier = Modifier.padding(horizontal = 70.dp)
             )
             HorizontalPager(
                 pageCount = state.pizzaList.size,
@@ -110,7 +111,6 @@ fun MainScreenContent(
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold,
             fontSize = 22.sp,
-            modifier = Modifier.padding(top = 16.dp)
         )
 
         PizzaSizeToggle(
@@ -121,45 +121,47 @@ fun MainScreenContent(
                 )
             },
             pizzaSize = state.pizzaList[pagerState.currentPage].size,
-            modifier = Modifier.padding(top = 16.dp)
         )
 
-        Text(
-            text = "CUSTOMIZE YOUR PIZZA",
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.Bold,
-            fontSize = 11.sp,
-            color = Color.Black.copy(0.38f),
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(16.dp)
-        )
-
-        LazyRow(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(32.dp),
-            contentPadding = PaddingValues(horizontal = 16.dp)
-        ) {
-            items(Pizza.PizzaIngredient.values()) { ingredient ->
-                IngredientItem(
-                    onClickIngredient = {
-                        onClickIngredient(
-                            pagerState.currentPage,
+        Column(modifier = Modifier) {
+            Text(
+                text = "CUSTOMIZE YOUR PIZZA",
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Bold,
+                fontSize = 11.sp,
+                color = Color.Black.copy(0.38f),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(bottom = 8.dp)
+            )
+            LazyRow(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(32.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp)
+            ) {
+                items(Pizza.PizzaIngredient.values()) { ingredient ->
+                    IngredientItem(
+                        onClickIngredient = {
+                            onClickIngredient(
+                                pagerState.currentPage,
+                                ingredient
+                            )
+                        },
+                        selected = state.pizzaList[pagerState.currentPage].ingredients.contains(
                             ingredient
-                        )
-                    },
-                    selected = state.pizzaList[pagerState.currentPage].ingredients.contains(
+                        ),
                         ingredient
-                    ),
-                    ingredient
-                )
+                    )
+                }
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+
         Button(
-            onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(containerColor = Gray),
-            shape = RoundedCornerShape(10.dp)
+            onClick = { /*TODO*/ },
+            colors = ButtonDefaults.buttonColors(containerColor = Gray),
+            shape = RoundedCornerShape(10.dp),
+            modifier = Modifier.padding(bottom = 16.dp).height(42.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -173,7 +175,6 @@ fun MainScreenContent(
                 Text(text = "Add To Cart", color = WhiteC7)
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
     }
 }
 
