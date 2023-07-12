@@ -68,7 +68,7 @@ fun PizzaItem(
             AnimatedVisibility(
                 visible = pizza.ingredients.contains(ingredient),
                 enter = scaleIn(initialScale = 4f, animationSpec = spec),
-                exit = fadeOut(animationSpec = spec)
+                exit = fadeOut()
             ) {
                 Image(
                     painter = painterResource(id = ingredient.imageGroup),
