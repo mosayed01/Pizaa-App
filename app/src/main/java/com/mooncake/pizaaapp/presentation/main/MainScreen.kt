@@ -132,7 +132,7 @@ fun MainScreenContent(
                 color = Color.Black.copy(0.38f),
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(bottom = 8.dp)
+                    .padding(start = 16.dp, bottom = 8.dp)
             )
             LazyRow(
                 Modifier.fillMaxWidth(),
