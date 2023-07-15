@@ -28,9 +28,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AnimatedPath() {
-    val drawPathAnimation = remember { Animatable(0f) }
-    val pathMeasure = remember { PathMeasure() }
     var fullGraphPath by remember { mutableStateOf(Path()) }
+    val pathMeasure = remember { PathMeasure() }
+    val drawPathAnimation = remember { Animatable(0f) }
     val animatedPath = remember {
         derivedStateOf {
             val newPath = Path()
