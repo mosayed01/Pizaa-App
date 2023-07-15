@@ -67,7 +67,7 @@ private fun DrawScope.getHeartPath(): Path {
         moveTo(size.width * 0.5f, size.height * 0.9f)
         cubicTo(
             size.width * -0.2f,
-            size.height * 0f,
+            size.height * 0.3f,
             size.width * 0.5f,
             size.height * 0.1f,
             size.width * 0.5f,
@@ -77,7 +77,7 @@ private fun DrawScope.getHeartPath(): Path {
             size.width * 0.5f,
             size.height * 0.1f,
             size.width * 1.2f,
-            size.height * 0f,
+            size.height * 0.3f,
             size.width * 0.5f,
             size.height * 0.9f,
         )
