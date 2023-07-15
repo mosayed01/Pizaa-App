@@ -1,10 +1,13 @@
 package com.mooncake.pizaaapp.presentation.main.composables
 
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.InfiniteRepeatableSpec
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -17,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathMeasure
@@ -44,13 +48,26 @@ fun AnimatedPath() {
             newPath
         }
     }
+    val animatedColor by rememberInfiniteTransition().animateColor(
+        initialValue = Color.Cyan,
+        targetValue = Color.Blue,
+        animationSpec = InfiniteRepeatableSpec(
+            animation = tween(5000),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
 
     Canvas(modifier = Modifier.size(400.dp)) {
         fullGraphPath = getHeartPath()
         drawPath(
             path = animatedPath.value,
-            color = Color.Black,
-            style = Stroke(width = 4.dp.toPx(), cap = StrokeCap.Round)
+            brush = Brush.verticalGradient(
+                colors = listOf(
+                    animatedColor,
+                    animatedColor.copy(green = 0.5f)
+                )
+            ),
+            style = Stroke(width = 8.dp.toPx(), cap = StrokeCap.Round)
         )
     }
 
@@ -90,9 +107,7 @@ private fun DrawScope.getHeartPath(): Path {
 @Composable
 fun PreviewAnimatedPath() {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Box(modifier = Modifier.border(width = 10.dp, color = Color.Green)){
-            AnimatedPath()
-        }
+        AnimatedPath()
     }
 }
 
