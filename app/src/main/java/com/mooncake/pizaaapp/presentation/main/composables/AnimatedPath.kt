@@ -68,7 +68,7 @@ private fun DrawScope.getHeartPath(): Path {
         cubicTo(
             size.width * -0.2f,
             size.height * 0.3f,
-            size.width * 0.5f,
+            size.width * 0.3f,
             size.height * 0.1f,
             size.width * 0.5f,
             size.height * 0.4f,
