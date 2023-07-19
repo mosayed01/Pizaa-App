@@ -5,11 +5,13 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -38,7 +40,7 @@ fun PizzaSizeToggle(
     onSelectNewSize: (Pizza.PizzaSize) -> Unit,
     pizzaSize: Pizza.PizzaSize,
     modifier: Modifier = Modifier,
-    circleSize: Dp = 30.dp,
+    circleSize: Dp = 40.dp,
     circleColor: Color = WhiteFD,
     paddingHorizontal: Dp = 16.dp,
     textStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(
@@ -46,6 +48,7 @@ fun PizzaSizeToggle(
         color = Color.Black
     )
 ) {
+    val interactionSource = MutableInteractionSource()
     val translateXFactor by animateFloatAsState(
         targetValue = when (pizzaSize) {
             Pizza.PizzaSize.SMALL -> -1f
@@ -78,9 +81,10 @@ fun PizzaSizeToggle(
                 text = Pizza.PizzaSize.SMALL.char.toString(),
                 style = textStyle,
                 modifier = Modifier
+                    .padding(top = circleSize * 0.2f)
                     .size(circleSize)
                     .clip(CircleShape)
-                    .clickable { onSelectNewSize(Pizza.PizzaSize.SMALL) },
+                    .clickable(interactionSource = interactionSource,null) { onSelectNewSize(Pizza.PizzaSize.SMALL) },
             )
             Text(
                 text = Pizza.PizzaSize.MEDIUM.char.toString(),
@@ -88,7 +92,7 @@ fun PizzaSizeToggle(
                 modifier = Modifier
                     .size(circleSize)
                     .clip(CircleShape)
-                    .clickable { onSelectNewSize(Pizza.PizzaSize.MEDIUM) },
+                    .clickable(interactionSource = interactionSource,null) { onSelectNewSize(Pizza.PizzaSize.MEDIUM) },
             )
             Text(
                 text = Pizza.PizzaSize.LARGE.char.toString(),
@@ -96,7 +100,7 @@ fun PizzaSizeToggle(
                 modifier = Modifier
                     .size(circleSize)
                     .clip(CircleShape)
-                    .clickable { onSelectNewSize(Pizza.PizzaSize.LARGE) },
+                    .clickable(interactionSource = interactionSource,null) { onSelectNewSize(Pizza.PizzaSize.LARGE) },
             )
         }
     }
@@ -107,9 +111,9 @@ fun PizzaSizeToggle(
 private fun Preview() {
     var size by remember { mutableStateOf(Pizza.PizzaSize.SMALL) }
     Column {
-        PizzaSizeToggle(onSelectNewSize = {  }, pizzaSize = Pizza.PizzaSize.SMALL)
-        PizzaSizeToggle(onSelectNewSize = {  }, pizzaSize = Pizza.PizzaSize.MEDIUM)
-        PizzaSizeToggle(onSelectNewSize = {  }, pizzaSize = Pizza.PizzaSize.LARGE)
+        PizzaSizeToggle(onSelectNewSize = { }, pizzaSize = Pizza.PizzaSize.SMALL)
+        PizzaSizeToggle(onSelectNewSize = { }, pizzaSize = Pizza.PizzaSize.MEDIUM)
+        PizzaSizeToggle(onSelectNewSize = { }, pizzaSize = Pizza.PizzaSize.LARGE)
         PizzaSizeToggle(onSelectNewSize = { size = it }, pizzaSize = size)
     }
 }
