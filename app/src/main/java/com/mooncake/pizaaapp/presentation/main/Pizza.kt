@@ -27,6 +27,6 @@ data class Pizza(
         SAUSAGE(R.drawable.sausage_group, R.drawable.sausage),
     }
 
-    val selectedPrice
+    val selectedPricePrice
         get() = prices[size]
 }

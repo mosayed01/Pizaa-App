@@ -107,7 +107,7 @@ fun MainScreenContent(
         }
 
         Text(
-            text = "$${state.pizzaList[pagerState.currentPage].selectedPrice}",
+            text = "$${state.pizzaList[pagerState.currentPage].selectedPricePrice}",
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold,
             fontSize = 22.sp,
